@@ -42,7 +42,7 @@ class LogExtractor:
             requests_diff = [j-i for i, j in zip(requests[:-1], requests[1:])]
             avg_response_time_intervals = self.__calculate_avg_response_time_intervals(requests, avg_response_times, requests_diff)
 
-            return avg_response_time_intervals, requests, timestamps
+            return avg_response_time_intervals, requests_diff, timestamps
     
 
     
