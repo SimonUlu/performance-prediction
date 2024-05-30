@@ -7,3 +7,6 @@ class MultiDimFormatter(Formatter):
 
     def format(self):
         pass
+
+    def read_and_prepare(self, df, file):
+        return super().read_and_prepare(file)
