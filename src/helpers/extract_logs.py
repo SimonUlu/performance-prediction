@@ -1,4 +1,4 @@
-from log_extractor.log_extractor import LogExtractor
+from helpers.extractors.log_extractor.log_extractor import LogExtractor
 
 def main():
     input_filepath = "assets/locust_logs/constant-load/long/constant_lng.txt"
