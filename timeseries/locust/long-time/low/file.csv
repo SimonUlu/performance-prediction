@@ -1,16 +1,4 @@
 Timestamp,Requests je Sekunde,Durchschnittliche Antwortzeitintervalle
-2,0,0
-4,0,0
-6,0,0
-8,0,0
-10,0,0
-12,0,0
-14,0,0
-16,0,0
-18,0,0
-20,0,0
-22,0,0
-24,1,255.0
 26,2,60.0
 28,3,39.0
 30,6,26.0
@@ -375,4 +363,3 @@ Timestamp,Requests je Sekunde,Durchschnittliche Antwortzeitintervalle
 748,50,176.0
 750,44,546.5681818181819
 752,56,177.0
-754,0,0
