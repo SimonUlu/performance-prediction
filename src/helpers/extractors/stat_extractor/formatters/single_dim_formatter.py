@@ -1,5 +1,4 @@
-from contracts.formatter import Formatter
-import pandas as pd
+from src.helpers.extractors.stat_extractor.formatters.contracts.formatter import Formatter
 import os
 
 class SingleDimFormatter(Formatter):
@@ -10,7 +9,6 @@ class SingleDimFormatter(Formatter):
     def read_and_prepare(self, df, file):
 
         df = df.iloc[:, [1]]
-
         folders = file.split(os.path.sep)
 
         if len(folders) >= 3:

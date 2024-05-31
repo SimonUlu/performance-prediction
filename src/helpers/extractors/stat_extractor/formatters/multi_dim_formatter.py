@@ -1,6 +1,5 @@
-from contracts.formatter import Formatter
+from src.helpers.extractors.stat_extractor.formatters.contracts.formatter import Formatter
 import os
-import pandas as pd
 
 class MultiDimFormatter(Formatter):
     def __init__(self):

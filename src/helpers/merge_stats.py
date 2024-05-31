@@ -3,6 +3,8 @@ import pandas as pd
 first_path = "timeseries/grafana/new.csv"
 second_path = "timeseries/locust/constant_load.csv"
 
+new_path = "timeseries/constant-load/long/new.csv"
+
 df1 = pd.read_csv(second_path)
 df2 = pd.read_csv(first_path)
 

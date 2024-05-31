@@ -1,6 +1,6 @@
 import pandas as pd
-from single_dim_formatter import SingleDimFormatter
-from multi_dim_formatter import MultiDimFormatter
+from src.helpers.extractors.stat_extractor.formatters.single_dim_formatter import SingleDimFormatter
+from src.helpers.extractors.stat_extractor.formatters.multi_dim_formatter import MultiDimFormatter
 
 class FormatterFactory:
     def __init__(self):

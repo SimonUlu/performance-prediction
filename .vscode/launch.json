@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Modul ausführen",
+            "request": "launch",
+            "module": "src.helpers.extract_stats",
+            "console": "integratedTerminal"
+        }
+    ]
+}
