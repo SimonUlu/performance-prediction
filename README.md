@@ -17,3 +17,11 @@ source venv/bin/activate
 ```sh
 pip install -r requirements.txt
 ```
+
+
+# 2. Extract all needed stats
+
+## a. Extract locust load generator stats (such as requests, response_times, etc.)
+
+
+## b. Extract grafana stats (such as cpu_util, memory, etc.)
