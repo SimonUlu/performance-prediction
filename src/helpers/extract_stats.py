@@ -5,7 +5,7 @@ from src.helpers.extractors.stat_extractor.formatters.stat_merger import StatMer
 
 def main():
 
-    custom_path = "service-penetration/checkout"
+    custom_path = "long-time/high"
 
     # use formatter Factory
     formatter_factory = FormatterFactory()

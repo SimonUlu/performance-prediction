@@ -1,9 +1,11 @@
 import pandas as pd
 
-first_path = "timeseries/grafana/new.csv"
-second_path = "timeseries/locust/constant_load.csv"
+base_path = "long-time/high"
 
-new_path = "timeseries/constant-load/long/new.csv"
+first_path = "timeseries/grafana/" + base_path + "/file.csv"
+second_path = "timeseries/locust/"  + base_path + "/file.csv"
+
+new_path = "timeseries/merged/" + base_path + "/file.csv"
 
 df1 = pd.read_csv(second_path)
 df2 = pd.read_csv(first_path)
@@ -14,4 +16,4 @@ merged_df.reset_index(drop=True, inplace=True)
 
 print(merged_df.head(5))
 
-merged_df.to_csv("timeseries/merged/new.csv", index=False)
+merged_df.to_csv(new_path, index=False)
