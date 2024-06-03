@@ -56,5 +56,3 @@ class CsvProcessor:
             for i in range(len(columns_df1), len(columns_df2)):
                 print(f"- {columns_df2[i]}")
 
-
-    def add_lags(self, columns):
