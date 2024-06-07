@@ -1,6 +1,6 @@
 import pandas as pd
 
-base_path = "long-time/high"
+base_path = "newer/medium"
 
 first_path = "timeseries/grafana/" + base_path + "/file.csv"
 second_path = "timeseries/locust/"  + base_path + "/file.csv"

@@ -5,7 +5,7 @@ from src.helpers.extractors.stat_extractor.formatters.stat_merger import StatMer
 
 def main():
 
-    custom_path = "long-time/high"
+    custom_path = "newer/medium"
 
     # use formatter Factory
     formatter_factory = FormatterFactory()
