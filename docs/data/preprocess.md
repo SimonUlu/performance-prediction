@@ -32,7 +32,7 @@ def add_rolling_average(self, columns, window_size):
             self.data[f'{column}_rolling_avg_{window_size}'] = self.data[column].rolling(window=window_size).mean()
 ```
 
-![ROlling Average](../../assets/images/rolling_average.png)
+![Rolling Average](../../assets/images/rolling_average.png)
 
 ### c. Adding sums over a certain timespan
 
@@ -74,4 +74,4 @@ def standardize(self, columns):
 
 ### Feature Selection
 
-![Principal Component Analysis](../../assets/images/principal_component.png)
+![Principal Component Analysis](../../assets/images/principal_components.png)
