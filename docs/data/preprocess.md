@@ -12,7 +12,7 @@ Then the real preprocessing had to be performed. According to our thesis we have
 
 ### a. Adding Lags
 
-![Lags](assets/images/lags.png)
+![Lags](../../assets/images/lags.png)
 
 
 ### b. Adding Rolling Averages
