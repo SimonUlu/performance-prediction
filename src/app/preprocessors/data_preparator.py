@@ -41,4 +41,8 @@ class DataPreparator:
         self.data.to_csv(output_file_path, index=False)
 
 
+    def remove_nan_values(self):
+        pass
+
+
     

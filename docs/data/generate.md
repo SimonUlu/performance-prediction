@@ -66,3 +66,15 @@ Run:
 python3 -m src.helpers.extract_stats 
 ```
 
+## Finally merge all files 
+
+Class Function can be found under: [Script](https://github.com/nadlig123/performance-prediction/blob/main/src/preprocessors/csv_processor.py)
+
+```sh
+csv_processor = CsvProcessor(file="file.csv")
+
+old_folder_path = "timeseries/merged"
+new_file_path = "timeseries/merged/merged.csv
+
+csv_processor.merge_all_files(old_folder_path, new_file_path)
+```

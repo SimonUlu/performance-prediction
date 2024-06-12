@@ -1,4 +1,5 @@
 import pandas as pd
+import glob
 
 class CsvProcessor:
 
@@ -55,4 +56,23 @@ class CsvProcessor:
             print("\nAdditional Columns:")
             for i in range(len(columns_df1), len(columns_df2)):
                 print(f"- {columns_df2[i]}")
+
+
+    def merge_all_files(self, old_folder_path, new_file_path):
+        all_files = glob.glob(old_folder_path + '/**/*.csv', recursive=True)
+
+        df_list = []
+        for filename in all_files:
+            df = pd.read_csv(filename, index_col=None, header= 0)
+            df_list.append(df)
+
+        combined_df = pd.concat(df_list, axis=0, ignore_index=True)
+
+        combined_df.to_csv(new_file_path, index=False)
+
+    def clean_rows_without_requests(self):
+
+        pass
+
+
 
