@@ -14,14 +14,14 @@ class DataPreparator:
             for lag in range(1, num_past_timestamps + 1):
                 self.data[f'{column}_lag_{lag}'] = self.data[column].shift(lag)
 
-        
+    # function to add rolling averages -> over a spec period of time
     def add_rolling_average(self, columns, window_size):
         for column in columns:
             self.data[f'{column}_rolling_avg_{window_size}'] = self.data[column].rolling(window=window_size).mean()
         
-    def add_sums(self, column_groups):
-        for i, column_names in enumerate(column_groups, start=1):
-            self.data[f'sum_of_group_{i}'] = self.data[column_names].sum(axis=1)
+    def add_cumulative_sum(self, columns):
+        for column in columns:
+            self.data[f'{column}_cumsum'] = self.data[column].cumsum()
         
     def log_scale(self, columns):
         for column in columns:
