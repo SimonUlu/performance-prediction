@@ -63,7 +63,7 @@ Logic can be found under: [Script](https://github.com/nadlig123/performance-pred
 
 Run:
 ```sh
-python3 -m src.helpers.extract_stats 
+python3 -m src.helpers.merge_stats 
 ```
 
 ## Finally merge all files 
