@@ -6,7 +6,7 @@ class DataPreparator:
 
     def __init__(self, file_path):
         self.file_path = file_path
-        self.data = pd.read_csv(file_path)
+        self._data = pd.read_csv(file_path)
 
     # function to add lags to columns specified in header and time specified in heder
     def add_lags(self, columns, num_past_timestamps):
@@ -39,6 +39,14 @@ class DataPreparator:
         
     def save_prepared_data(self, output_file_path):
         self.data.to_csv(output_file_path, index=False)
+
+    @property
+    def data(self):
+        return self._data
+    
+    @data.setter
+    def data(self, value):
+        self._data = value
 
 
     def remove_nan_values(self):
