@@ -1,14 +1,14 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 
-class LinearRegressor():
+class DecisionTreeRegression():
     def __init__(self, filepath):
         self.filepath = filepath
-        self.model = LinearRegression()
+        self.model = DecisionTreeRegressor(random_state=42)
         self.X_train, self.X_test, self.y_train, self.y_test, self.y_pred = [None] * 5
 
     def load_and_prepare_data(self):
@@ -27,13 +27,6 @@ class LinearRegressor():
     def train_model(self):
         self.model.fit(self.X_train, self.y_train)
         self.y_pred = self.model.predict(self.X_test)
-
-    def evaluate_model(self):
-        mse = mean_squared_error(self.y_test, self.y_pred)
-        print("MSE:", mse)
-        comparison_df = pd.DataFrame({'Tatsächliche Werte': self.y_test, 'Vorhersagewerte': self.y_pred})
-        comparison_df.reset_index(drop=True, inplace=True)
-        print(comparison_df)
 
 
     def plot_results(self, hauptbereich_max=5000):
@@ -57,7 +50,7 @@ class LinearRegressor():
 # How to use this model:
 
 # filepath = './../../../timeseries/merged/combined_timeseries.csv'
-# predictor = LinearRegressor(filepath)
+# predictor = DecisionTreeRegression(filepath)
 # predictor.load_and_prepare_data()
 # predictor.train_model()
 # predictor.evaluate_model()
