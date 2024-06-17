@@ -8,6 +8,29 @@ class MultiDimFormatter(Formatter):
     def format(self):
         pass
 
+    # def read_and_prepare(self, df, file):
+    #     df = df.drop(columns =[df.columns[0]])
+
+    #     folders = file.split(os.path.sep)
+
+    #     if len(folders) >= 3:
+    #         path_part = f"{folders[-3]}_{folders[-2]}"
+    #     else: 
+    #         path_part = "Fehler"
+
+    #     new_column_names = []
+
+    #     for column in df.columns:
+    #         service_name = ''.join([i for i in column.split('-')[0] if not i.isdigit()])
+            
+    #         ## add path to column_name
+    #         new_column_name = f"{path_part}_{service_name}" if path_part != "Fehler" else service_name
+    #         new_column_names.append(new_column_name)
+
+    #     df.columns = new_column_names
+
+    #     return df
+    
     def read_and_prepare(self, df, file):
         df = df.drop(columns =[df.columns[0]])
 
@@ -20,11 +43,10 @@ class MultiDimFormatter(Formatter):
 
         new_column_names = []
 
-        for column in df.columns:
-            service_name = ''.join([i for i in column.split('-')[0] if not i.isdigit()])
+        for column, index in df.columns:
+            service_name = "system-pod-" + index
             
-            ## add path to column_name
-            new_column_name = f"{path_part}_{service_name}" if path_part != "Fehler" else service_name
+            new_column_name = service_name
             new_column_names.append(new_column_name)
 
         df.columns = new_column_names
