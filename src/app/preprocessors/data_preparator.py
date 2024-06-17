@@ -5,8 +5,9 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 class DataPreparator:
 
     def __init__(self, file_path):
-        self.file_path = file_path
-        self._data = pd.read_csv(file_path)
+        self.file_path = file_path + "/file.csv"
+        self.output_file_path = file_path + "prepared_file.csv"
+        self._data = pd.read_csv(self.file_path)
 
     # function to add lags to columns specified in header and time specified in heder
     def add_lags(self, columns, num_past_timestamps):
@@ -37,8 +38,8 @@ class DataPreparator:
         for column in columns:
             self.data[f'{column}_standardized'] = scaler.fit_transform(self.data[[column]])
         
-    def save_prepared_data(self, output_file_path):
-        self.data.to_csv(output_file_path, index=False)
+    def save_prepared_data(self):
+        self.data.to_csv(self.output_file_path, index=False)
 
     @property
     def data(self):
