@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 class RecursiveFeatureSelector:
 
-    def __init__(self, base_model, input_file_path, y_cols, to_be_removed_cols, ):
+    def __init__(self, base_model, input_file_path, y_cols, to_be_removed_cols):
         self.base_model = base_model
         self.df = pd.read_csv(input_file_path)
         self.X = self.df.drop(['Durchschnittliche Antwortzeitintervalle', 'Requests je Sekunde', 'Timestamp'], axis=1)

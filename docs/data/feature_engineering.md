@@ -2,6 +2,12 @@
 
 please refer to [notebook][src/dev/feature_engineering.ipynb]
 
+## Following strategies have been conducted to deal with nan-values as many modells cant deal with team
+
+### 1. Impute to median
+
+### 2. Impute to mean
+
 ## Following strategies have been consulted in the preprocessing pipeline and the generated data has been validated
 
 ### 1. Remove Features with low variance
