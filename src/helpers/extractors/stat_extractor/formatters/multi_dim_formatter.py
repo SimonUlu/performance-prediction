@@ -43,8 +43,8 @@ class MultiDimFormatter(Formatter):
 
         new_column_names = []
 
-        for column, index in df.columns:
-            service_name = "system-pod-" + index
+        for index, column in enumerate(df.columns):
+            service_name = "system-pod-" + str(index+1)
             
             new_column_name = service_name
             new_column_names.append(new_column_name)

@@ -5,7 +5,7 @@ from src.helpers.extractors.stat_extractor.formatters.stat_merger import StatMer
 
 def main():
 
-    custom_path = "tea-store/one"
+    custom_path = "tea-store/three"
 
     # use formatter Factory
     formatter_factory = FormatterFactory()

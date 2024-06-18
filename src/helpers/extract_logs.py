@@ -2,7 +2,7 @@ from src.helpers.extractors.log_extractor.log_extractor import LogExtractor
 
 def main():
 
-    custom_path = "tea-store/one"
+    custom_path = "tea-store/three"
 
     # set filepath to be used
     input_filepath = "assets/locust_logs/"+ custom_path +"/file.txt"

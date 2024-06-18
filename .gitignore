@@ -32,3 +32,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Unneccessary unpreprocessed data
+
+assets/grafana_stats
+assets/locust_logs
