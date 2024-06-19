@@ -1,6 +1,6 @@
 import pandas as pd
 
-base_path = "tea-store/three"
+base_path = "service-penetration/checkout"
 
 first_path = "timeseries/grafana/" + base_path + "/file.csv"
 second_path = "timeseries/locust/"  + base_path + "/file.csv"

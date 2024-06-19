@@ -85,5 +85,12 @@ x = Dense(64, activation='relu')(x)
 - Define output layer
 
 ```sh
-
+outputs = Dense(1)(x)  # Für Regression
 ```
+
+- create model
+
+```sh
+model = Model(inputs=inputs, outputs=outputs)
+```
+

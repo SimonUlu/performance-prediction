@@ -37,14 +37,18 @@ class MultiDimFormatter(Formatter):
         folders = file.split(os.path.sep)
 
         if len(folders) >= 3:
-            path_part = f"{folders[-3]}_{folders[-2]}"
+            if(folders[-2] == "pod_restart"):
+                path_part = "pod-restart-count"
+            else:
+                path_part = f"{folders[-3]}_{folders[-2]}"
         else: 
             path_part = "Fehler"
 
         new_column_names = []
 
+
         for index, column in enumerate(df.columns):
-            service_name = "system-pod-" + str(index+1)
+            service_name = path_part + "-pod-" + str(index+1)
             
             new_column_name = service_name
             new_column_names.append(new_column_name)
