@@ -24,19 +24,40 @@ class DataPreparator:
         for column in columns:
             self.data[f'{column}_cumsum'] = self.data[column].cumsum()
         
+    # creates new column instead of replacing (if you want to compare)
     def log_scale(self, columns):
         for column in columns:
             self.data[f'{column}_log_scaled'] = np.log1p(self.data[column])
+
+    ## replaces the old column with the new values
+    def log_scale_replace(self, columns):
+        for column in columns:
+            self.data[column] = np.log1p(self.data[column]) 
         
+    ## creates new
     def normalize(self, columns):
         scaler = MinMaxScaler()
         for column in columns:
             self.data[f'{column}_normalized'] = scaler.fit_transform(self.data[[column]])
-        
+
+    ## replaces
+    def normalize_replace(self, columns):
+        scaler = MinMaxScaler()
+        for column in columns:
+            self.data[column] = scaler.fit_transform(self.data[[column]])  
+
+
+    ## creates new   
     def standardize(self, columns):
         scaler = StandardScaler()
         for column in columns:
             self.data[f'{column}_standardized'] = scaler.fit_transform(self.data[[column]])
+
+    ## replaces
+    def standardize_replace(self, columns):
+        scaler = StandardScaler()
+        for column in columns:
+            self.data[column] = scaler.fit_transform(self.data[[column]])
         
     def save_prepared_data(self):
         self.data.to_csv(self.output_file_path, index=False)
