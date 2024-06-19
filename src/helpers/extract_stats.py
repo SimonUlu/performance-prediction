@@ -5,13 +5,13 @@ from src.helpers.extractors.stat_extractor.formatters.stat_merger import StatMer
 
 def main():
 
-    custom_path = "service-penetration/checkout"
+    custom_path = "long-time/low"
 
     # use formatter Factory
     formatter_factory = FormatterFactory()
 
     ##set output file path
-    stat_merger = StatMerger("timeseries/grafana/" + custom_path + "/file.csv")
+    stat_merger = StatMerger("timeseries/grafana_new/" + custom_path + "/file.csv")
 
     # set input file path
     base_path = "assets/grafana_stats/" + custom_path

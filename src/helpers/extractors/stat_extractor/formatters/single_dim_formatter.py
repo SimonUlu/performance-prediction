@@ -12,7 +12,10 @@ class SingleDimFormatter(Formatter):
         folders = file.split(os.path.sep)
 
         if len(folders) >= 3:
-            new_column_name = f"{folders[-3]}_{folders[-2]}"
+            if(folders[-2] == "system"):
+                new_column_name = f"{folders[-3]}_{folders[-2]}"
+            else:
+                new_column_name = f"{folders[-2]}"
         else:
             new_column_name = "Fehler"
 

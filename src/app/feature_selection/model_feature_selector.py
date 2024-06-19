@@ -5,15 +5,15 @@ from sklearn.pipeline import Pipeline
 
 class ModelFeatureSelector:
 
-    def __init__(self, base_model, input_file_path, y_cols, to_be_removed_cols):
+    def __init__(self, base_model, input_file_path, y_col, to_be_removed_cols):
         self.base_model = base_model
         self.df = pd.read_csv(input_file_path)
-        self.X = self.df.drop(['Durchschnittliche Antwortzeitintervalle', 'Requests je Sekunde', 'Timestamp'], axis=1)
-        self.y = self.df['Durchschnittliche Antwortzeitintervalle']
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        self.X = self.df.drop(to_be_removed_cols, axis=1)
+        self.y = self.df[y_col]
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
 
 
-    def select_features(self, step, cross_validation_folds):
+    def select_features(self):
 
         model = self.base_model
 
@@ -32,6 +32,11 @@ class ModelFeatureSelector:
         # Nachdem das Modell angepasst wurde, können Sie die ausgewählten Features ermitteln
         selected_features = self.X_train.columns[pipeline.named_steps['feature_selection'].get_support()]
         print("Ausgewählte Features:", selected_features)
+
+        not_selected_features = self.X_train.columns[~pipeline.named_steps['feature_selection'].get_support()]
+        print("Nicht ausgewählte Features:", not_selected_features)
+
+        return not_selected_features
 
 
 
