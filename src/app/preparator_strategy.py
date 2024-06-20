@@ -2,7 +2,7 @@ from src.app.preprocessors.data_preparator import DataPreparator
 
 def main():
 
-    input_file_path = "timeseries/merged/constant-load/long"
+    input_file_path = "long-time/low"
 
     data_preparator = DataPreparator(input_file_path)
 
@@ -15,7 +15,7 @@ def main():
 
     data_preparator.log_scale(['network_outgoing_system', 'memory', 'i_o_read', 'i_o_write'])
 
-    print(data_preparator.data.head(20))
+    data_preparator.save_prepared_data()
 
 if __name__ == '__main__':
     main()

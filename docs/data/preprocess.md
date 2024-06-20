@@ -1,5 +1,8 @@
 # This is a quick overview on all preprocessing steps that have to be performed on the data
 
+to get a overview on how we preprocesssed the data before putting it into the machine learning models go to:
+[script](/src/app/preparator_strategy.py)
+
 ## 1. Merge timeseries of all scenarios
 
 As we had many different scenarios set up in the beginning we began by checking if all were compatible to merge 
@@ -75,3 +78,6 @@ def standardize(self, columns):
 ### Feature Selection
 
 ![Principal Component Analysis](../../assets/images/principal_components.png)
+
+
+

@@ -5,8 +5,8 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 class DataPreparator:
 
     def __init__(self, file_path):
-        self.file_path = file_path + "/file.csv"
-        self.output_file_path = file_path + "prepared_file.csv"
+        self.file_path = "timeseries/merged/" + file_path + "/file.csv"
+        self.output_file_path = "timeseries/scaled/" + file_path + "/file.csv"
         self._data = pd.read_csv(self.file_path)
 
     # function to add lags to columns specified in header and time specified in heder
