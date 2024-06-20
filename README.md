@@ -21,7 +21,6 @@ pip install -r requirements.txt
 
 # 2. Extract all needed stats
 
-## a. Extract locust load generator stats (such as requests, response_times, etc.)
+For the data extraction please refer to the docs under [docs](/docs/data/generate.md). This guide will help you understand the extraction of the locust stats (such as requests, response times) and the extraction of the stats retrieved from grafana (timeseries of cpu-util and so on). 
 
-
-## b. Extract grafana stats (such as cpu_util, memory, etc.)
+Furthermore it guides you how to merge these stats, to finally get one timeseries with all merged stats.
