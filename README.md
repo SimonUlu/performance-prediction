@@ -24,3 +24,9 @@ pip install -r requirements.txt
 For the data extraction please refer to the docs under [docs](/docs/data/generate.md). This guide will help you understand the extraction of the locust stats (such as requests, response times) and the extraction of the stats retrieved from grafana (timeseries of cpu-util and so on). 
 
 Furthermore it guides you how to merge these stats, to finally get one timeseries with all merged stats.
+
+
+# 3. Data Preprocessing
+
+
+# 4. Feature Selection
