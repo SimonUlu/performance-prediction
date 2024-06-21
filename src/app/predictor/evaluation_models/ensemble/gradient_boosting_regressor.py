@@ -6,9 +6,9 @@ from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 
 class GradientBoostingRegression():
-        def __init__(self, filepath, n_estimators, random_state, max_depth, bootstrap, max_features):
+        def __init__(self, filepath, n_estimators, random_state, max_depth, max_features):
             self.filepath = filepath
-            self.model = GradientBoostingRegressor(random_state=random_state, n_estimators=n_estimators, max_features=max_features, bootstrap=bootstrap, max_depth=max_depth)
+            self.model = GradientBoostingRegressor(random_state=random_state, n_estimators=n_estimators, max_features=max_features, max_depth=max_depth)
             self.X_train, self.X_test, self.y_train, self.y_test, self.y_pred = [None] * 5
 
         def load_and_prepare_data(self):
