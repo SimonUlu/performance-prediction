@@ -28,6 +28,24 @@ class RecursiveFeatureSelector:
         print("Nicht ausgewählte Features:", not_selected_features)
 
         return not_selected_features
+    
+    
+
+    def get_most_important_features_ordered(self, number):
+        model = self.base_model
+
+        model.fit(self.X_train, self.y_train)
+
+        # Holen der Feature Importances
+        importances = model.feature_importances_
+
+        # Konvertieren der Importances in einen DataFrame für eine bessere Visualisierung
+        features_df = pd.DataFrame({'Feature': self.X_train.columns, 'Importance': importances})
+
+        # Sortieren der Features nach ihrer Wichtigkeit
+        features_df = features_df.sort_values(by='Importance', ascending=False)
+
+        return features_df.head(number)
 
 
     def get_selected_features(self):
