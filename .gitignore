@@ -37,3 +37,6 @@ venv.bak/
 
 assets/grafana_stats
 assets/locust_logs
+
+timeseries/scaled
+timeseries/merged
