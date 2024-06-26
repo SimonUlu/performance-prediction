@@ -55,13 +55,13 @@ For further understanding please refer to the [subdocumentation](/docs/data/prep
 # 4. Feature Selection
 
 The feature selection consists of two main parts.  
-## 1. Remove unneccessary features from our data
+## a. Remove unneccessary features from our data
 
 At first we tried to identify features that weaken our prediction results by introducing unneccessary noise. This is especially important as for future research in this field it is very interesting to see which performance measures are especially important for predicting response times.
 
 Please refer to [subdocumentation](/docs/data/feature_selection.md)
 
-## 2. Find the most important features
+## b. Find the most important features
 
 The second part consists of finding the most important features. The most important features are being used for adding lags, etc.
 
