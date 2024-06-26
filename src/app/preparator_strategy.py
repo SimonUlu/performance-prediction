@@ -2,7 +2,7 @@ from src.app.preprocessors.data_preparator import DataPreparator
 
 def main():
 
-    input_file_path = "tea-store/three"
+    input_file_path = "tea-store/five"
 
     data_preparator = DataPreparator(input_file_path)
 
