@@ -6,11 +6,21 @@ please refer to [notebook][src/dev/feature_engineering.ipynb]
 
 ### a. Impute to median
 
+```sh
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='mean')
+```
+
 ### b. Impute to mean
 
 
+```sh
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='median')
+```
 
-## Select features that should not be conducted any more
+
+## 2. Select features that should not be conducted any more
 
 - the implemented code for this task can be found under [code](/src/app/feature_selection/recursive_feature_selector.py)
 
@@ -35,7 +45,7 @@ return not_selected_features
 ```
 
 
-## Select most important features to be used for adding lags and rolling averages
+## 3. Select most important features to be used for adding lags and rolling averages
 
 - the implemented code can also be found under [code](/src/app/feature_selection/recursive_feature_selector.py)
 
