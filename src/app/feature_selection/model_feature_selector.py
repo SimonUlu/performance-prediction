@@ -31,10 +31,8 @@ class ModelFeatureSelector:
 
         # Nachdem das Modell angepasst wurde, können Sie die ausgewählten Features ermitteln
         selected_features = self.X_train.columns[pipeline.named_steps['feature_selection'].get_support()]
-        print("Ausgewählte Features:", selected_features)
 
         not_selected_features = self.X_train.columns[~pipeline.named_steps['feature_selection'].get_support()]
-        print("Nicht ausgewählte Features:", not_selected_features)
 
         return not_selected_features
 

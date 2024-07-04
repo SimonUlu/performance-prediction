@@ -22,10 +22,8 @@ class RecursiveFeatureSelector:
         print("Optimale Anzahl von Features : %d" % selector.n_features_)
 
         selected_features = self.X_train.columns[selector.support_]
-        print("Ausgewählte Felder", selected_features)
 
         not_selected_features = self.X_train.columns[~selector.support_]
-        print("Nicht ausgewählte Features:", not_selected_features)
 
         return not_selected_features
     
