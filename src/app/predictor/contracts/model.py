@@ -33,7 +33,7 @@ class Model(ABC):
                 features_to_be_dropped  = ['Requests je Sekunde','Durchschnittliche Antwortzeitintervalle','network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-3',
                     'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-7', 'network_outgoing_pod-pod-8',
                     'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
-                    'network_outgoing_pod-pod-11', 'network_outgoing_system',
+                    'network_outgoing_pod-pod-11', 
                     'cpu_pod-pod-1', 'cpu_pod-pod-2', 'cpu_pod-pod-3', 'cpu_pod-pod-4',
                     'cpu_pod-pod-5', 'cpu_pod-pod-6','cpu_pod-pod-7' , 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-11',
                     'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
@@ -82,11 +82,30 @@ class Model(ABC):
 
         # Berechnung des MAPE (Mean Absolute Percentage Error)
         # Achtung: MAPE erwartet, dass keine echten Werte von 0 enthalten sind, da dies zu einer Division durch Null führen würde.
-        mape = mean_absolute_percentage_error(self.y_test, self.y_pred)
+        mape = self.custom_mape(self.y_test, self.y_pred)
         print(mape)
 
         r2 = r2_score(self.y_test, self.y_pred)
         print("R²-Score:", r2)
+
+    def custom_mape(self, y_true, y_pred):
+        # Überprüfen, ob y_true und y_pred Pandas Series sind, und in numpy Arrays umwandeln
+        if isinstance(y_true, pd.Series):
+            y_true = y_true.to_numpy()
+        if isinstance(y_pred, pd.Series):
+            y_pred = y_pred.to_numpy()
+        
+        # Filtern der Paare, bei denen y_true nicht 0 ist
+        non_zero_indices = np.where(y_true != 0)
+        
+        # Anwenden des Filters auf die Arrays
+        y_true_filtered = y_true[non_zero_indices]
+        y_pred_filtered = y_pred[non_zero_indices]
+        
+        # Berechnung des MAPE nur für Nicht-Null Werte
+        mape = np.mean(np.abs((y_true_filtered - y_pred_filtered) / y_true_filtered))
+        return mape
+         
 
     def plot_results(self, hauptbereich_max=5000):
         plt.figure(figsize=(10, 6))

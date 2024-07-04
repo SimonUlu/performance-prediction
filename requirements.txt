@@ -6,3 +6,4 @@ scikit-learn
 dataframe_image
 scipy
 tensorflow
+xgboost

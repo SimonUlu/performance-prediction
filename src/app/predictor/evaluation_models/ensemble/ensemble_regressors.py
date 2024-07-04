@@ -1,12 +1,10 @@
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.ensemble import RandomForestRegressor
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 from src.app.predictor.contracts.model import Model
 from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVR
+import xgboost as xgb
 
 class GradientBoostingRegression(Model):
     def __init__(self, filepath, n_estimators, random_state, max_depth, max_features):
@@ -51,6 +49,29 @@ class RandomForestRegression(Model):
 
     def create_model(self):
         return RandomForestRegressor(random_state=self.random_state, n_estimators=self.n_estimators, max_features=self.max_features, max_depth=self.max_depth)
+
+class SVRRegressor(Model):
+
+    def __init__(self, filepath):
+        super().__init__(filepath)
+
+    def create_model(self):
+        return SVR()
+    
+class XGBoostRegressor(Model):
+
+    def __init__(self, filepath, learning_rate, max_depth, colsample_bytree, alpha, n_estimators):
+        super().__init__(filepath)
+        self.learning_rate = learning_rate
+        self.max_depth = max_depth
+        self.colsample_bytree = colsample_bytree
+        self.alpha = alpha
+
+    def create_model(self):
+        return xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = self.colsample_bytree, 
+                learning_rate = self.learning_rate, max_depth = self.max_depth, alpha = self.alpha, 
+                n_estimators = self.n_estimators)
+
 
 
       
