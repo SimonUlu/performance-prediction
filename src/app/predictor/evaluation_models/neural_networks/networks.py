@@ -6,8 +6,10 @@ from scikeras.wrappers import KerasClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
+from sklearn.model_selection import KFold
 import pandas as pd
 import numpy as np
+from itertools import product
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 
@@ -146,43 +148,65 @@ class SequentialNetwork():
 
         r2 = r2_score(self.y_test, self.y_pred)
         print("R²-Score:", r2)
-        
 
-    def build_model(self, learning_rate=0.01, dropout_rate=0.2, n_neurons=64):
+    def build_model_for_grid_search(self, neurons=64, dropout_rate=0.2, learning_rate=0.01):
         model = Sequential([
-            Dense(n_neurons, activation='relu', input_shape=(self.X_train.shape[1],)),
-            Dense(n_neurons, activation='relu'),
+            Dense(neurons, activation='relu', input_shape=(self.X_train.shape[1],)),  
+            Dense(neurons, activation='relu'), 
             Dropout(dropout_rate),
-            Dense(1)
+            Dense(1)  # Ausgangsschicht für Regression
         ])
-        model.compile(optimizer=Adam(learning_rate=learning_rate), loss='mean_squared_error')
-        return model
-    
 
-    def model_wrapper(self, learning_rate, dropout_rate, n_neurons):
-        def create_model():
-            model = Sequential([
-                Dense(n_neurons, activation='relu', input_shape=(self.X_train.shape[1],)),
-                Dense(n_neurons, activation='relu'),
-                Dropout(dropout_rate),
-                Dense(1)
-            ])
-            model.compile(optimizer=Adam(learning_rate=learning_rate), loss='mean_squared_error')
-            return model
-        return create_model
+        model.compile(optimizer=Adam(learning_rate=learning_rate), loss="mean_squared_error")
+
+        return model
+
 
     def search_for_best_model(self):
-        # Wrapper-Funktion als build_fn verwenden
-        model = KerasClassifier(build_fn=lambda: self.model_wrapper(learning_rate=0.01, dropout_rate=0.2, n_neurons=64), epochs=100, batch_size=10, verbose=0)
-        param_dist = {
-            'learning_rate': [0.01, 0.001, 0.0001],
-            'dropout_rate': [0.2, 0.3, 0.4],
-            'n_neurons': [64, 128, 256]
-        }
-        random_search = RandomizedSearchCV(estimator=model, param_distributions=param_dist, n_iter=10, cv=3)
-        random_search_result = random_search.fit(self.X_train, self.y_train)
+        results = []
 
-        print("Best: %f using %s" % (random_search_result.best_score_, random_search_result.best_params_))
+        param_dist = {
+            'learning_rate': [0.05 ,0.03, 0.01, 0.001, 0.005],
+            'dropout_rate': [0.1, 0.2, 0.3, 0.4],
+            'neurons': [128, 256],
+            'epochs': [50, 100, 150]  # Hinzufügen der Epochen als Hyperparameter
+        }
+
+        # Erstellen aller möglichen Parameterkombinationen
+        param_combinations = list(product(
+            param_dist['neurons'], 
+            param_dist['dropout_rate'], 
+            param_dist['learning_rate'], 
+            param_dist['epochs']))  # Hinzufügen von 'epochs' in die Kombinationen
+
+        scaler = StandardScaler()
+
+        X_train_scaled = scaler.fit_transform(self.X_train)
+        X_test_scaled = scaler.transform(self.X_test)
+
+        for neurons, dropout_rate, learning_rate, epochs in param_combinations:
+            # Hier wird immer "adam" als Optimierer verwendet, da kein anderer angegeben wurde
+            model = self.build_model_for_grid_search(neurons, dropout_rate, learning_rate)
+            model.fit(X_train_scaled, self.y_train, epochs=epochs, batch_size=32, verbose=0, validation_split=0.2)  # Anpassen der Epochen/Batch-Größe nach Bedarf
+
+            y_pred = model.predict(X_test_scaled)
+            r2 = r2_score(self.y_test, y_pred)
+            # Bewertung des Modells auf dem Testset
+            score = model.evaluate(X_test_scaled, self.y_test, verbose=0)
+            
+            results.append((neurons, dropout_rate, learning_rate, epochs  , "adam", r2 ,score))
+
+        for result in results:
+            print(result)
+
+        # Ergebnisse sortieren, um das beste Modell zu finden (nach Score)
+        results.sort(key=lambda x: x[-1])
+        best_params = results[0]
+        print(f"Beste Parameter: {best_params[:-1]}, Bester Score: {best_params[-1]}")
+        return best_params
+
+
+
     
     
     
