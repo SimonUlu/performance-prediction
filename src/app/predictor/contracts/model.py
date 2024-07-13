@@ -32,7 +32,7 @@ class Model(ABC):
             df_imputed['Timestamp'] = df['Timestamp']
 
             if drop_features == True:
-                features_to_be_dropped  = ['Requests je Sekunde','Durchschnittliche Antwortzeitintervalle','network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-3',
+                features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle','network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-3',
                     'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-7', 'network_outgoing_pod-pod-8',
                     'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
                     'network_outgoing_pod-pod-11', 
@@ -40,7 +40,7 @@ class Model(ABC):
                     'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-11',
                     'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
                     'pod-restart-count-pod-3', 'pod-restart-count-pod-4',
-                    'pod-restart-count-pod-5', 'pod-restart-count-pod-6',
+                    'pod-restart-count-pod-5', 'pod-restart-count-pod-6', 'pod-restart-count-pod-7',
                     'pod-restart-count-pod-8', 'pod-restart-count-pod-10',
                     'pod-restart-count-pod-11', 'pod-restart-count-pod-12',
                     'pod-restart-count-pod-13', 'network_outgoing_pod-pod-14', 'cpu_pod-pod-14',
@@ -82,7 +82,7 @@ class Model(ABC):
                     'network_outgoing_pod-pod-25', 'cpu_pod-pod-15', 'cpu_pod-pod-16',
                     'cpu_pod-pod-17', 'cpu_pod-pod-18', 'cpu_pod-pod-19', 'cpu_pod-pod-20',
                     'cpu_pod-pod-21', 'cpu_pod-pod-22', 'cpu_pod-pod-23', 'cpu_pod-pod-24',
-                    'cpu_pod-pod-25']
+                    'cpu_pod-pod-25', ]
                 X = df_imputed.drop(features_to_be_dropped, axis=1)
             
             print(X)
