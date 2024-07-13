@@ -24,8 +24,8 @@ class SequentialNetwork():
 
     def create_model(self):
         return Sequential([
-            Dense(64, activation='relu', input_shape=(self.X_train.shape[1],)),  
-            Dense(64, activation='relu'), 
+            Dense(256, activation='relu', input_shape=(self.X_train.shape[1],)),  
+            Dense(256, activation='relu'), 
             Dropout(0.2),
             Dense(1)
         ])

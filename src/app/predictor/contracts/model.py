@@ -61,14 +61,14 @@ class Model(ABC):
                     'pod-restart-count-pod-25']
                 X = df_imputed.drop(features_to_be_dropped, axis=1)
             else: 
-                features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle',
+                features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle', 'Timestamp',
                     'network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-2', 'network_outgoing_pod-pod-3',
                     'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-6', 'network_outgoing_pod-pod-7', 
                     'network_outgoing_pod-pod-8', 'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
                     'network_outgoing_pod-pod-11','cpu_pod-pod-1','cpu_pod-pod-2', 'cpu_pod-pod-3', 'cpu_pod-pod-4',
                     'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-10', 'cpu_pod-pod-11',
                     'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
-                    'pod-restart-count-pod-3', 'pod-restart-count-pod-4',
+                    'pod-restart-count-pod-3', 'pod-restart-count-pod-4', 'network_outgoing_system' ,
                     'pod-restart-count-pod-5', 'pod-restart-count-pod-6',  'pod-restart-count-pod-7',
                     'pod-restart-count-pod-8', 'pod-restart-count-pod-9', 'pod-restart-count-pod-10',
                     'pod-restart-count-pod-11', 'pod-restart-count-pod-12',
@@ -82,16 +82,10 @@ class Model(ABC):
                     'network_outgoing_pod-pod-25', 'cpu_pod-pod-15', 'cpu_pod-pod-16',
                     'cpu_pod-pod-17', 'cpu_pod-pod-18', 'cpu_pod-pod-19', 'cpu_pod-pod-20',
                     'cpu_pod-pod-21', 'cpu_pod-pod-22', 'cpu_pod-pod-23', 'cpu_pod-pod-24',
-                    'cpu_pod-pod-25', 'pod-restart-count-pod-14',
-                    'pod-restart-count-pod-15', 'pod-restart-count-pod-16',
-                    'pod-restart-count-pod-17', 'pod-restart-count-pod-18',
-                    'pod-restart-count-pod-19', 'pod-restart-count-pod-20',
-                    'pod-restart-count-pod-21', 'pod-restart-count-pod-22',
-                    'pod-restart-count-pod-23', 'pod-restart-count-pod-24',
-                    'pod-restart-count-pod-25']
+                    'cpu_pod-pod-25']
                 X = df_imputed.drop(features_to_be_dropped, axis=1)
             
-            
+            print(X)
             y = df_imputed['Durchschnittliche Antwortzeitintervalle']
             
             self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.3, random_state=42)
