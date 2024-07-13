@@ -59,18 +59,21 @@ class SVRRegressor(Model):
         return SVR()
     
 class XGBoostRegressor(Model):
-
-    def __init__(self, filepath, learning_rate, max_depth, colsample_bytree, alpha, n_estimators):
-        super().__init__(filepath)
+    def __init__(self, filepath, colsample_bytree, learning_rate, max_depth, alpha, n_estimators):
+        self.colsample_bytree = colsample_bytree
         self.learning_rate = learning_rate
         self.max_depth = max_depth
-        self.colsample_bytree = colsample_bytree
         self.alpha = alpha
+        self.n_estimators = n_estimators
+        super().__init__(filepath)
 
     def create_model(self):
-        return xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = self.colsample_bytree, 
-                learning_rate = self.learning_rate, max_depth = self.max_depth, alpha = self.alpha, 
-                n_estimators = self.n_estimators)
+        return xgb.XGBRegressor(objective='reg:squarederror', 
+                                colsample_bytree = 0.3, 
+                                learning_rate = self.learning_rate, 
+                                max_depth = self.max_depth, 
+                                alpha = self.alpha, 
+                                n_estimators = self.n_estimators)
 
 
 
