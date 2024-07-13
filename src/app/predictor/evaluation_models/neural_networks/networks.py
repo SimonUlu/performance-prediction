@@ -1,7 +1,7 @@
 from src.app.predictor.contracts.model import Model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam, SGD, RMSprop
 from scikeras.wrappers import KerasClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -167,9 +167,10 @@ class SequentialNetwork():
 
         param_dist = {
             'learning_rate': [0.05 ,0.03, 0.01, 0.001, 0.005],
-            'dropout_rate': [0.1, 0.2, 0.3, 0.4],
-            'neurons': [128, 256],
-            'epochs': [50, 100, 150]  # Hinzufügen der Epochen als Hyperparameter
+            'dropout_rate': [0.1, 0.2, 0.3],
+            'neurons': [128],
+            'epochs': [50, 100],
+            'batch_size': [16, 32, 64],  # Hinzufügen verschiedener Batch-Größen
         }
 
         # Erstellen aller möglichen Parameterkombinationen
@@ -177,33 +178,49 @@ class SequentialNetwork():
             param_dist['neurons'], 
             param_dist['dropout_rate'], 
             param_dist['learning_rate'], 
-            param_dist['epochs']))  # Hinzufügen von 'epochs' in die Kombinationen
+            param_dist['epochs'],
+            param_dist['batch_size'],
+        )) 
 
         scaler = StandardScaler()
 
         X_train_scaled = scaler.fit_transform(self.X_train)
         X_test_scaled = scaler.transform(self.X_test)
 
-        for neurons, dropout_rate, learning_rate, epochs in param_combinations:
-            # Hier wird immer "adam" als Optimierer verwendet, da kein anderer angegeben wurde
+        results_df = pd.DataFrame(columns=['Neurons', 'Dropout_Rate', 'Learning_Rate', 'Epochs', 'Batch_Size', 'R2_Score', 'Loss'])
+
+        for neurons, dropout_rate, learning_rate, epochs, batch_size in param_combinations:
+
+
             model = self.build_model_for_grid_search(neurons, dropout_rate, learning_rate)
-            model.fit(X_train_scaled, self.y_train, epochs=epochs, batch_size=32, verbose=0, validation_split=0.2)  # Anpassen der Epochen/Batch-Größe nach Bedarf
+            model.fit(X_train_scaled, self.y_train, epochs=epochs, batch_size=batch_size, verbose=0, validation_split=0.2)  # Anpassen der Epochen/Batch-Größe nach Bedarf
 
             y_pred = model.predict(X_test_scaled)
             r2 = r2_score(self.y_test, y_pred)
             # Bewertung des Modells auf dem Testset
             score = model.evaluate(X_test_scaled, self.y_test, verbose=0)
+            # Füge am Ende jeder Iteration die Ergebnisse hinzu
+            results_df = pd.concat([results_df, pd.DataFrame([{
+                'Neurons': neurons,
+                'Dropout_Rate': dropout_rate,
+                'Learning_Rate': learning_rate,
+                'Epochs': epochs,
+                'Batch_Size': batch_size,
+                'R2_Score': r2,
+                'Loss': score
+            }])], ignore_index=True)
             
             results.append((neurons, dropout_rate, learning_rate, epochs  , "adam", r2 ,score))
 
-        for result in results:
-            print(result)
-
         # Ergebnisse sortieren, um das beste Modell zu finden (nach Score)
-        results.sort(key=lambda x: x[-1])
+        results_df.sort_values(by='Loss', ascending=True, inplace=True)
+        best_params = results_df.iloc[0]
         best_params = results[0]
+
+        print(results_df)
         print(f"Beste Parameter: {best_params[:-1]}, Bester Score: {best_params[-1]}")
-        return best_params
+        return results_df
+    
 
 
 
