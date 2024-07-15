@@ -1,7 +1,8 @@
 from src.app.predictor.contracts.model import Model
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Dense, Dropout, Conv1D, MaxPooling1D, Flatten
 from tensorflow.keras.optimizers import Adam, SGD, RMSprop
+from keras.regularizers import l1, l2
 from scikeras.wrappers import KerasClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -24,9 +25,16 @@ class SequentialNetwork():
 
     def create_model(self):
         return Sequential([
-            Dense(256, activation='relu', input_shape=(self.X_train.shape[1],)),  
-            Dense(256, activation='relu'), 
-            Dropout(0.2),
+            # Input Layer
+            Dense(256, activation='relu', input_shape=(self.X_train.shape[1],)),
+            Dropout(0.0),
+            # Hidden Layers gemäß Ihrer neuen Spezifikation
+            Dense(128, activation='relu'),
+            Dense(64, activation='relu'),
+            Dense(32, activation='relu'),
+            Dropout(0.0),
+            Dense(16, activation='relu'),
+            # Output Layer
             Dense(1)
         ])
     
@@ -48,15 +56,13 @@ class SequentialNetwork():
 
         if drop_features == True:
             features_to_be_dropped  = ['Requests je Sekunde','Durchschnittliche Antwortzeitintervalle','network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-3',
-                'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-7', 'network_outgoing_pod-pod-8',
+                'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 
                 'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
-                'network_outgoing_pod-pod-11', 
-                'cpu_pod-pod-1', 'cpu_pod-pod-2', 'cpu_pod-pod-3', 'cpu_pod-pod-4',
-                'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-11',
+                'network_outgoing_pod-pod-11', 'cpu_pod-pod-11',
                 'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
                 'pod-restart-count-pod-3', 'pod-restart-count-pod-4',
                 'pod-restart-count-pod-5', 'pod-restart-count-pod-6',
-                'pod-restart-count-pod-8', 'pod-restart-count-pod-10',
+                'pod-restart-count-pod-10',
                 'pod-restart-count-pod-11', 'pod-restart-count-pod-12',
                 'pod-restart-count-pod-13', 'network_outgoing_pod-pod-14', 'cpu_pod-pod-14',
                 'network_outgoing_pod-pod-15', 'network_outgoing_pod-pod-16',
@@ -75,19 +81,25 @@ class SequentialNetwork():
                 'pod-restart-count-pod-23', 'pod-restart-count-pod-24',
                 'pod-restart-count-pod-25']
             X = df_imputed.drop(features_to_be_dropped, axis=1)
-        else: 
-            features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle',
+        elif drop_features == "remove_pod_metrics": 
+            features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle', 'Timestamp',
                 'network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-2', 'network_outgoing_pod-pod-3',
-                'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-6', 'network_outgoing_pod-pod-7', 
-                'network_outgoing_pod-pod-8', 'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
-                'network_outgoing_pod-pod-11','cpu_pod-pod-1','cpu_pod-pod-2', 'cpu_pod-pod-3', 'cpu_pod-pod-4',
-                'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-10', 'cpu_pod-pod-11',
-                'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
-                'pod-restart-count-pod-3', 'pod-restart-count-pod-4',
-                'pod-restart-count-pod-5', 'pod-restart-count-pod-6',  'pod-restart-count-pod-7',
+                'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-6', 
+                'network_outgoing_pod-pod-7', 'network_outgoing_pod-pod-8', 'network_outgoing_pod-pod-9', 
+                'network_outgoing_pod-pod-10', 'network_outgoing_pod-pod-11', 'cpu_pod-pod-3', 'cpu_pod-pod-4', 
+                'cpu_pod-pod-1', 'cpu_pod-pod-2', 'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-10',
+                'cpu_pod-pod-11', 'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
+                'pod-restart-count-pod-3', 'pod-restart-count-pod-4',  'pod-restart-count-pod-5', 'pod-restart-count-pod-6', 
+                'pod-restart-count-pod-7', 'cpu_pod-pod-1_rolling_avg_5', 'cpu_pod-pod-11_rolling_avg_5', 
+                'cpu_pod-pod-8_rolling_avg_5', 'network_outgoing_system',
                 'pod-restart-count-pod-8', 'pod-restart-count-pod-9', 'pod-restart-count-pod-10',
-                'pod-restart-count-pod-11', 'pod-restart-count-pod-12',
-                'pod-restart-count-pod-13', 'network_outgoing_pod-pod-14', 'cpu_pod-pod-14',
+                'pod-restart-count-pod-11', 'pod-restart-count-pod-12', 'pod-restart-count-pod-14',
+                'pod-restart-count-pod-13', 'pod-restart-count-pod-15',
+                'pod-restart-count-pod-16', 'pod-restart-count-pod-17',
+                'pod-restart-count-pod-18', 'pod-restart-count-pod-19', 'pod-restart-count-pod-25',
+                'pod-restart-count-pod-20', 'pod-restart-count-pod-18', 'pod-restart-count-pod-19', 
+                'pod-restart-count-pod-20', 'pod-restart-count-pod-24',
+                'pod-restart-count-pod-21', 'pod-restart-count-pod-22', 'pod-restart-count-pod-23','network_outgoing_pod-pod-14', 'cpu_pod-pod-14',
                 'network_outgoing_pod-pod-12', 'network_outgoing_pod-pod-13', 'network_outgoing_pod-pod-14',
                 'network_outgoing_pod-pod-15', 'network_outgoing_pod-pod-16',
                 'network_outgoing_pod-pod-17', 'network_outgoing_pod-pod-18',
@@ -97,10 +109,33 @@ class SequentialNetwork():
                 'network_outgoing_pod-pod-25', 'cpu_pod-pod-15', 'cpu_pod-pod-16',
                 'cpu_pod-pod-17', 'cpu_pod-pod-18', 'cpu_pod-pod-19', 'cpu_pod-pod-20',
                 'cpu_pod-pod-21', 'cpu_pod-pod-22', 'cpu_pod-pod-23', 'cpu_pod-pod-24',
+                'cpu_pod-pod-25']
+            X = df_imputed.drop(features_to_be_dropped, axis=1)
+
+        else: 
+            features_to_be_dropped  = ['Durchschnittliche Antwortzeitintervalle',
+                'network_outgoing_pod-pod-1', 'network_outgoing_pod-pod-2', 'network_outgoing_pod-pod-3',
+                'network_outgoing_pod-pod-4', 'network_outgoing_pod-pod-5', 'network_outgoing_pod-pod-6', 'network_outgoing_pod-pod-7', 
+                'network_outgoing_pod-pod-8', 'network_outgoing_pod-pod-9', 'network_outgoing_pod-pod-10',
+                'network_outgoing_pod-pod-11','cpu_pod-pod-1','cpu_pod-pod-2', 'cpu_pod-pod-4',
+                'cpu_pod-pod-5', 'cpu_pod-pod-6', 'cpu_pod-pod-7', 'cpu_pod-pod-8', 'cpu_pod-pod-9', 'cpu_pod-pod-10',
+                'cpu_pod-pod-12', 'cpu_pod-pod-13', 'pod-restart-count-pod-1', 'pod-restart-count-pod-2',
+                'pod-restart-count-pod-3', 'pod-restart-count-pod-4', 
+                'pod-restart-count-pod-5', 'pod-restart-count-pod-6',  'pod-restart-count-pod-7',
+                'pod-restart-count-pod-8', 'pod-restart-count-pod-9', 'pod-restart-count-pod-10',
+                'pod-restart-count-pod-11', 'pod-restart-count-pod-12',
+                'pod-restart-count-pod-13', 'network_outgoing_pod-pod-14', 'cpu_pod-pod-14',
+                'network_outgoing_pod-pod-12', 'network_outgoing_pod-pod-13', 'network_outgoing_pod-pod-14',
+                'network_outgoing_pod-pod-15', 'network_outgoing_pod-pod-16',
+                'network_outgoing_pod-pod-17', 'network_outgoing_pod-pod-18',
+                'network_outgoing_pod-pod-19', 'network_outgoing_pod-pod-20',
+                'network_outgoing_pod-pod-23', 'network_outgoing_pod-pod-24',
+                'network_outgoing_pod-pod-25', 'cpu_pod-pod-15', 'cpu_pod-pod-16',
+                'cpu_pod-pod-17', 'cpu_pod-pod-18', 'cpu_pod-pod-19', 'cpu_pod-pod-20',
+                'cpu_pod-pod-21', 'cpu_pod-pod-22', 'cpu_pod-pod-23', 'cpu_pod-pod-24',
                 'cpu_pod-pod-25', 'pod-restart-count-pod-14',
                 'pod-restart-count-pod-15', 'pod-restart-count-pod-16',
                 'pod-restart-count-pod-17', 'pod-restart-count-pod-18',
-                'pod-restart-count-pod-19', 'pod-restart-count-pod-20',
                 'pod-restart-count-pod-21', 'pod-restart-count-pod-22',
                 'pod-restart-count-pod-23', 'pod-restart-count-pod-24',
                 'pod-restart-count-pod-25']
@@ -150,12 +185,45 @@ class SequentialNetwork():
         print("R²-Score:", r2)
 
     def build_model_for_grid_search(self, neurons=64, dropout_rate=0.2, learning_rate=0.01):
-        model = Sequential([
-            Dense(neurons, activation='relu', input_shape=(self.X_train.shape[1],)),  
-            Dense(neurons, activation='relu'), 
-            Dropout(dropout_rate),
-            Dense(1)  # Ausgangsschicht für Regression
-        ])
+
+        if neurons == 64:
+            model = Sequential([
+                Dense(64, activation='relu', input_shape=(self.X_train.shape[1],)),  
+                Dropout(dropout_rate),
+                Dense(32, activation='relu'), 
+                Dense(16, activation='relu'), 
+                Dense(8, activation='relu'), 
+                Dropout(dropout_rate),
+                Dense(1)
+            ])
+        elif neurons == 128:
+            model =  Sequential([
+                # Input Layer
+                Dense(128, activation='relu', input_shape=(self.X_train.shape[1],)),
+                Dropout(dropout_rate),
+                # Hidden Layers gemäß Ihrer neuen Spezifikation
+                Dense(64, activation='relu'),
+                Dense(32, activation='relu'),
+                Dense(16, activation='relu'),
+                Dropout(dropout_rate),
+                # Output Layer
+                Dense(1)
+            ])
+
+        elif neurons == 256:
+            model =  Sequential([
+                # Input Layer
+                Dense(256, activation='relu', input_shape=(self.X_train.shape[1],)),
+                Dropout(dropout_rate),
+                # Hidden Layers gemäß Ihrer neuen Spezifikation
+                Dense(128, activation='relu'),
+                Dense(64, activation='relu'),
+                Dense(32, activation='relu'),
+                Dropout(dropout_rate),
+                Dense(16, activation='relu'),
+                # Output Layer
+                Dense(1)
+            ])
 
         model.compile(optimizer=Adam(learning_rate=learning_rate), loss="mean_squared_error")
 
@@ -166,11 +234,11 @@ class SequentialNetwork():
         results = []
 
         param_dist = {
-            'learning_rate': [0.05 ,0.03, 0.01, 0.001, 0.005],
-            'dropout_rate': [0.1, 0.2, 0.3],
-            'neurons': [128],
-            'epochs': [50, 100],
-            'batch_size': [16, 32, 64],  # Hinzufügen verschiedener Batch-Größen
+            'learning_rate': [0.05 ,0.03, 0.01, 0.005],
+            'dropout_rate': [0.0, 0.1, 0.2],
+            'neurons': [64, 128, 256],
+            'epochs': [150, 250, 500],
+            'batch_size': [32], 
         }
 
         # Erstellen aller möglichen Parameterkombinationen
@@ -211,6 +279,7 @@ class SequentialNetwork():
             }])], ignore_index=True)
             
             results.append((neurons, dropout_rate, learning_rate, epochs  , "adam", r2 ,score))
+
 
         # Ergebnisse sortieren, um das beste Modell zu finden (nach Score)
         results_df.sort_values(by='Loss', ascending=True, inplace=True)
