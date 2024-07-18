@@ -219,9 +219,9 @@ class Model(ABC):
         plt.scatter(self.y_test[ausreisser], self.y_pred[ausreisser], color='red', alpha=0.5, label='Ausreißer')
         plt.ylim(0, hauptbereich_max)
         plt.xlim(0, hauptbereich_max)
-        plt.title('Vorhersage vs. Tatsächliche Werte mit Fokus auf Hauptbereich')
-        plt.xlabel('Tatsächliche Werte')
-        plt.ylabel('Vorhersagewerte')
+        plt.title('Predicted  vs. actual values with focus on main main area')
+        plt.xlabel('Actual values')
+        plt.ylabel('Predicted values')
         plt.plot([0, hauptbereich_max], [0, hauptbereich_max], 'k--', lw=2)
         plt.legend()
         for i in self.y_test[ausreisser].index:
