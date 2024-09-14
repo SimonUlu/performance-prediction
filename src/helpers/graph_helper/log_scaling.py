@@ -107,5 +107,6 @@ ax[1].xaxis.set_major_locator(MaxNLocator(nbins=6))
 # Anpassung der Layouts, um Überlappungen zu vermeiden
 plt.tight_layout()
 
+plt.savefig("rolling_average.pdf", format='pdf')
 # Anzeigen der Plots
 plt.show()

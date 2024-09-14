@@ -86,4 +86,6 @@ plt.xlabel('Requests per Second')
 plt.ylabel('Average Response Time')
 plt.title('Requests vs Response Time')
 plt.legend()
+
+plt.savefig("rolling_average.pdf", format='pdf')
 plt.show()

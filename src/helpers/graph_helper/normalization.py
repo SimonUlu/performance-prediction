@@ -47,4 +47,5 @@ axs[2].set_ylim(-3, 3)  # Erweiterte y-Achse für Standardisierung
 
 # Anzeigen der Plots
 plt.tight_layout()  # Verbessert die Anordnung der Subplots
+plt.savefig("stand_norm.pdf", format='pdf')
 plt.show()

@@ -89,5 +89,6 @@ plt.legend()
 plt.xticks(rotation=45)
 plt.tight_layout()
 
+plt.savefig("rolling_average.pdf", format='pdf')
 # Anzeigen des Plots
 plt.show()
