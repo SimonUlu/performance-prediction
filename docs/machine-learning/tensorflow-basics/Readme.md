@@ -41,19 +41,19 @@ model.evaluate(x_test,  y_test, verbose=2)
 
 - Dropout:
 
-Dropout ist eine Regularisierungstechnik, die die Überanpassung (Overfitting) in neuronalen Netzen verhindert. Überanpassung tritt auf, wenn ein Modell die Trainingsdaten zu genau lernt, einschließlich des Rauschens und der Ausreißer, was zu einer schlechten Generalisierung auf neue Daten führt. Technisch gesehen wird beim Dropout während des Trainings eines neuronalen Netzes für jede Trainingsiteration ein Teil der Neuronen (samt ihren Verbindungen) zufällig ausgewählt und temporär aus dem Netzwerk entfernt. Die Wahrscheinlichkeit, mit der ein Neuron ausgeschaltet wird, wird durch den Dropout-Rate-Parameter bestimmt, der üblicherweise zwischen 0,2 und 0,5 liegt. Dies zwingt das Netzwerk dazu, redundante Repräsentationen der Daten zu lernen, da es sich nicht auf die Anwesenheit spezifischer Neuronen verlassen kann.
+Dropout is a regularization technique that prevents overfitting in neural networks. Overfitting occurs when a model learns the training data too accurately, including noise and outliers, resulting in poor generalization to new data. Technically, dropout during the training of a neural network involves randomly selecting a subset of neurons (along with their connections) for each training iteration and temporarily removing them from the network. The probability with which a neuron is switched off is determined by the dropout rate parameter, which is usually between 0.2 and 0.5. This forces the network to learn redundant representations of the data as it cannot rely on the presence of specific neurons.
 
-- Aktivierungsfunktion:
+- Activation function:
 
-An sich gibt es zum Beispiel tangens hyperbolikus (tanh), sigmoid oder relu aktivierungsfunktionen. Bei großen Netzen wird oftmal in den fc layern, meist die relu funktion verwendet weil sie auch werte gen 0 sehr gut gewichtet und ebenfalls sehr schnell ist. 
+In itself, there are, for example, tangent hyperbolic (tanh), sigmoid or relu activation functions. For large networks, the relu function is often used in the fc layers because it also weights values close to 0 very well and is also very fast. 
 
-- Layer:
+- Layers:
 
-Wähle eine sinnvolle Struktur. Zu viele Layer führen oft dazu dass ein Modell overfitted. Daher sollte man mehrere Architekture miteinander austesten.
+Choose a sensible structure. Too many layers often lead to a model being overfitted. You should therefore test several architectures together.
 
-- Input Layer:
+- Input layer:
 
-Zum Flatten der Daten je nach Input, muss das daran angepasst werden. 
+This must be adapted to flatten the data depending on the input. 
 
 
 ## Build a functional modell
