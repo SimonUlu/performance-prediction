@@ -3,7 +3,7 @@
 ## Preparation
 
 - Run locust load generator script in webview under [url](http://34.68.77.173/) ## url will only work while cluster is still online. 
-- Copy whole dashboard from grafana after logging in to your account (dashboard has been introduced under [grafana-setup-doc][https://github.com/nadlig123/thesis-boutique-shop/blob/main/custom-docs/system/monitoring/grafana/grafana-extracting.md])
+- Copy whole dashboard from grafana after logging in to your account (dashboard has been introduced under [grafana-setup-doc][https://github.com/SimonUlu/thesis-boutique-shop/blob/main/custom-docs/system/monitoring/grafana/grafana-extracting.md])
 
 
 ## Extract locust stats (f.e. requests, response_times, error_rates, etc.)
