@@ -7,7 +7,7 @@ to get a overview on how we preprocesssed the data before putting it into the ma
 
 As we had many different scenarios set up in the beginning we began by checking if all were compatible to merge 
 
-Code for this step can be found under [code](https://github.com/nadlig123/performance-prediction/blob/main/src/app/preprocessors/csv_processor.py)
+Code for this step can be found under [code](https://github.com/SimonUlu/performance-prediction/blob/main/src/app/preprocessors/csv_processor.py)
 
 ## 2. Preprocess the data
 
