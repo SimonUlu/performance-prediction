@@ -1,6 +1,6 @@
 # In this docs you can see how the features got prepared and potentially selected
 
-please refer to [notebook](../src/dev/feature_engineering.ipynb)
+please refer to [notebook](../../src/dev/feature_engineering.ipynb)
 
 ## 1. Following strategies have been conducted to deal with nan-values as many modells cant deal with team
 
