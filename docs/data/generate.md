@@ -8,7 +8,7 @@
 
 ## Extract locust stats (f.e. requests, response_times, error_rates, etc.)
 
-Logic can be found under: [Script](https://github.com/nadlig123/performance-prediction/blob/main/src/helpers/extract_logs.py)
+Logic can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/helpers/extract_logs.py)
 
 Data Preview:
 
@@ -34,7 +34,7 @@ python3 -m src.helpers.extract_logs
 
 ## Extract grafana stats (f.e. cpu_stats, memory, network_traffic, etc.)
 
-Logic can be found under: [Script](https://github.com/nadlig123/performance-prediction/blob/main/src/helpers/extract_stats.py)
+Logic can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/helpers/extract_stats.py)
 
 Data Preview:
 
@@ -59,7 +59,7 @@ python3 -m src.helpers.extract_stats
 
 ## Merge both stats 
 
-Logic can be found under: [Script](https://github.com/nadlig123/performance-prediction/blob/main/src/helpers/merge_stats.py)
+Logic can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/helpers/merge_stats.py)
 
 Run:
 ```sh
@@ -68,7 +68,7 @@ python3 -m src.helpers.merge_stats
 
 ## Finally merge all files 
 
-Class Function can be found under: [Script](https://github.com/nadlig123/performance-prediction/blob/main/src/preprocessors/csv_processor.py)
+Class Function can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/preprocessors/csv_processor.py)
 
 ```sh
 csv_processor = CsvProcessor(file="file.csv")
