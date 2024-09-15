@@ -68,7 +68,7 @@ python3 -m src.helpers.merge_stats
 
 ## Finally merge all files 
 
-Class Function can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/preprocessors/csv_processor.py)
+Class Function can be found under: [Script](https://github.com/SimonUlu/performance-prediction/blob/main/src/app/preprocessors/csv_processor.py)
 
 ```sh
 csv_processor = CsvProcessor(file="file.csv")
