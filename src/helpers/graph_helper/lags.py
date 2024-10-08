@@ -1,24 +1,29 @@
 import pandas as pd
 import numpy as np
-import dataframe_image as dfi
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
-# Creating a fictional dataset with daily metrics of a microservice
-np.random.seed(42)  # For reproducible results
+# Daten generieren
+np.random.seed(42)
 data = {
     'date': pd.date_range(start='2024-01-01', periods=10, freq='D'),
     'requests': np.random.randint(50, 200, size=10),
     'cpu_utilization': np.random.uniform(50, 90, size=10),
     'response_times': np.random.randint(100, 500, size=10)
 }
-
-# Converting to a pandas DataFrame
 df = pd.DataFrame(data)
+df['cpu_utilization_lag_1'] = df['cpu_utilization'].shift(1)
+df['cpu_utilization_lag_2'] = df['cpu_utilization'].shift(2)
+df['cpu_utilization_lag_3'] = df['cpu_utilization'].shift(3)
 
-# Adding Lag Features for CPU Utilization
-df['cpu_utilization_lag_1'] = df['cpu_utilization'].shift(1)  # Lag of 1 day
-df['cpu_utilization_lag_2'] = df['cpu_utilization'].shift(2)  # Lag of 2 days
-df['cpu_utilization_lag_3'] = df['cpu_utilization'].shift(3)  # Lag of 3 days
+# DataFrame als PDF speichern
+with PdfPages('dataframe_export.pdf') as pdf:
+    fig, ax = plt.subplots(figsize=(12, 6))  # Größere Tabelle für PDF
+    ax.axis('tight')
+    ax.axis('off')
+    table = ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
 
+    pdf.savefig(fig, bbox_inches='tight')  # Speichern als PDF
+    plt.close()
 
-# Save the styled DataFrame as an image
-dfi.export(df, 'dataframe_styled.png')
+print("PDF wurde erstellt: dataframe_export.pdf")
