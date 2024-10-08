@@ -66,3 +66,20 @@ Please refer to [subdocumentation](/docs/data/feature_selection.md)
 The second part consists of finding the most important features. The most important features are being used for adding lags, etc.
 
 Please refer to [subdocumentation](/docs/data/feature_selection.md)
+
+# 5. Structure of the repository
+
+### 1. Assets-folder
+
+Contains the following:
+- Extracted stats from grafana/prometheus from all runs from all reference applications
+- Extracted stats from locust runs from all runs from all reference applications
+- images produced for the thesis
+
+### 2. Docs
+
+Only contains subdocumentations for greater understanding of the code
+
+### 3. TimeSeries
+
+Contains the before merged and preprocessed timeseries files that were extracted from both grafana and locust 
