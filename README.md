@@ -83,3 +83,8 @@ Only contains subdocumentations for greater understanding of the code
 ### 3. TimeSeries
 
 Contains the before merged and preprocessed timeseries files that were extracted from both grafana and locust 
+
+### 4. Src 
+
+This is the main folder for the project where all functionality has been declared. For further information on the structure for this repo check out, following docs:
+[Structure Documentation](./docs/structure/ProjectStructure.md)
